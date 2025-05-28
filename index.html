@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Siswa Baru | SMKN 1 AIMERE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        header {
+    background: linear-gradient(135deg, #1e40af, #3b82f6); /* gradasi biru elegan */
+    color: white;
+    padding: 30px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border-bottom: 5px solid #2563eb;
+}
+
+.logo {
+    width: 90px;
+    height: auto;
+    margin-right: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    border: 2px solid white;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #ffffff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+header h1 small {
+    font-weight: 400;
+    font-size: 1rem;
+    color: #dbeafe;
+}
+font-family: 'Poppins', sans-serif;
+
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .profile {
+            margin: 40px 0;
+            line-height: 1.6;
+        }
+
+        .jurusan-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .jurusan-card {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .registration-form {
+            background: #f5f5f5;
+            padding: 40px 20px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .logo {
+                margin-bottom: 15px;
+            }
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 15px;
+            color: #aaa;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #555;
+        }
+
+        .jurusan-detail {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .jurusan-image {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        /* Tambahan style untuk profil sekolah */
+        .profile-modal-content {
+            background-color: #fefefe;
+            margin: 3% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        .profile-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .school-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .school-gallery img {
+            width: 100%;
+            border-radius: 8px;
+        }
+         /* Form Styles */
+         .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 0.5rem;
+        }
+/* STYLE BODY*/
+body {
+    background: linear-gradient(to right, #f0f4ff, #e0ecff); /* gradasi biru muda */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #1f2937;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Memberi tampilan seperti "kartu" pada container */
+.container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    margin-top: 30px;
+}
+
+/* Tambahan efek latar geometris modern (opsional) */
+body::before {
+    content: "";
+    position: fixed;
+    top: -100px;
+    left: -100px;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at top left, #c7d2fe 0%, transparent 70%), 
+                radial-gradient(circle at bottom right, #bfdbfe 0%, transparent 70%);
+    z-index: -1;
+    opacity: 0.3;
+}
+
+        .btn {
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+.cta-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 0;
+}
+/*STYLE MODAL*/
+/* Tampilan modal pop-up agar elegan */
+.modal-content {
+    background: linear-gradient(135deg, #1e3a8a, #2563eb); /* biru gradasi */
+    color: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Gaya teks agar kontras dan nyaman dibaca */
+.modal-content h2, 
+.modal-content p, 
+.modal-content ul {
+    color: #f9f9f9;
+}
+
+.modal-content ul {
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+.modal-content ul li {
+    margin-bottom: 10px;
+}
+
+/* Gambar dalam modal tampil lebih estetik */
+.jurusan-image {
+    border-radius: 10px;
+    border: 2px solid white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Tombol tutup (X) tampil kontras */
+.close, .close-btn {
+    color: #ffffff;
+    font-weight: bold;
+}
+.close:hover, .close-btn:hover {
+    color: #d1d5db;
+}
+#modalJurusan1 .modal-content {
+    background: linear-gradient(135deg, #047857, #0f766e); /* hijau toska */
+}
+#modalJurusan2 .modal-content {
+    background: linear-gradient(135deg, #92400e, #f97316); /* oranye-coklat */
+}
+#modalJurusan3 .modal-content {
+    background: linear-gradient(135deg, #7c3aed, #8b5cf6); /* ungu */
+}
+#modalJurusan4 .modal-content {
+    background: linear-gradient(135deg, #be185d, #db2777); /* pink merah tua */
+}
+#modalJurusan5 .modal-content {
+    background: linear-gradient(135deg, #0c4a6e, #0284c7); /* biru otomotif */
+}
+#modalJurusan6 .modal-content {
+    background: linear-gradient(135deg, #065f46, #10b981); /* hijau konstruksi */
+}
+#modalJurusan7 .modal-content {
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6); /* biru visual desain */
+}
+
+
+        
+
+.btn-primary {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    color: white;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
+}
+.btn-primary:hover {
+    background: linear-gradient(135deg, #1e3a8a, #1d4ed8);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(30, 64, 175, 0.6);
+}
+        .profile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.profile-box.profile-bg {
+    position: relative;
+    color: white;
+    background-image: url('images/profil\ bg.jpeg'); /* ganti sesuai nama file gambar */
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.profile-box.profile-bg .overlay {
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: rgba(0, 0, 0, 0.4); /* efek gelap agar teks tetap terbaca */
+    z-index: 1;
+    border-radius: 10px;
+}
+
+.profile-box.profile-bg h2,
+.profile-box.profile-bg p {
+    position: relative;
+    z-index: 2;
+}
+
+
+
+
+.btn-secondary {
+    background: #e5e7eb;
+    color: #1f2937;
+}
+
+.btn-secondary:hover {
+    background: #d1d5db;
+    transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .logo {
+        margin-bottom: 15px;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+}
+
+        .info-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <img src="images/logo-sekolah.png.PNG" alt="Logo Sekolah" class="logo">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+
+        <h1>
+            SMK NEGERI 1 AIMERE<br>
+            <small>BISA DAN HEBAT!</small>
+        </h1>
+    </header>
+    >
+    <div class="container">
+        <section class="profile-grid">
+            <div class="profile-box profile-bg" onclick="openModal('modalProfil')" style="cursor: pointer;">
+                <div class="overlay"></div>
+                <h2>Profil Sekolah</h2>
+                <p>SMK NEGERI 1 AIMERE merupakan sekolah kejuruan berbasis teknologi yang telah berdiri sejak Tahun 208. Kami memiliki fasilitas lengkap dan guru yang berpengalaman di bidangnya.</p>
+            </div>
+            
+            <div class="profile-box">
+                <h2>Informasi Sekolah</h2>
+                <img src="images/brosur JADI.jpg" alt="Gedung Sekolah" class="info-image">
+                <p><strong>Alamat:</strong> Jl.bajawa-manggarai</p>
+                <p><strong>Email:</strong> smkn1aimere77@gmail.com</p>
+                <p><strong>Telepon:</strong> --</p>
+                <p><strong>Website:</strong> <a href="https://smkn1aimere77@gmail.com" target="_blank">smkteknologimaju.sch.id</a></p>
+                <p><strong>Jam Operasional:</strong> Senin - Jumat, 07.00 - 15.00 WIB</p>
+            </div>
+        </section>
+        
+        
+
+    <div class="container">
+        <section class="jurusan">
+            <h2>7 Jurusan Kami</h2>
+            <div class="jurusan-wrapper">
+                <div class="jurusan-container">
+                    <!-- Jurusan 1 -->
+                    <div class="jurusan-card" onclick="openModal('modalJurusan1')" style="background-image: url('images/atph1.jpg');">
+                        <div class="overlay"></div>
+                        <h3>AGRIBISNIS TANAMAN PANGAN DAN HOLTIKULTURA</h3>
+                        <p>Mempelajari pengelolaan bisnis tanam sayuran dan buah</p>
+                        <p>Klik untuk mengetahui lebih dalam </p>
+                    </div>
+              
+                    <!-- Jurusan 2 -->
+                    <div class="jurusan-card" onclick="openModal('modalJurusan2')" style="background-image: url('images/atp1.jpg');">
+                        <div class="overlay"></div>
+                        <h3>AGRIBISIS TANAMAN PERKEBUNAN</h3>
+                        <p>Mempelajari pengelolaan bisnis tanaman umur panjang seperti kopi, pala, dll</p>
+                        <p>Klik untuk mengetahui lebih dalam </p>
+                    </div>
+              
+                    <!-- Jurusan 3 -->
+                    <div class="jurusan-card" onclick="openModal('modalJurusan3')" style="background-image: url('images/atu1.jpg');">
+                        <div class="overlay"></div>
+                        <h3>AAGRIBISNIS TERNAK UNGGAS</h3>
+                        <p>Mempelajari proses bisnis peternak unggas, seperti unggas pedaging, dan petelur</p>
+                        <p>Klik untuk mengetahui lebih dalam </p>
+                    </div>
+              
+                    <!-- Jurusan 4 -->
+                    <div class="jurusan-card" onclick="openModal('modalJurusan4')" style="background-image: url('images/atr1.jpg');">
+                        <div class="overlay"></div>
+                        <h3>AGRIBISNIS TERNAK RUMIN</h3>
+                        <p>Mempelajari proses bisnis ternak ruminansia, seperti sapi, kambing, dll.</p>
+                        <p>Klik untuk mengetahui lebih dalam </p>
+                    </div>
+              
+                    <!-- Jurusan 5 -->
+                    <div class="jurusan-card" onclick="openModal('modalJurusan5')" style="background-image: url('images/tkro1.jpg');">
+                        <div class="overlay"></div>
+                        <h3>TEKNIK KENDARAAN RINGAN OTOMOTIF</h3>
+                        <p>Mempelajari mekanika, otomotif, dan manufaktur</p>
+                        <p>Klik untuk mengetahui lebih dalam </p>
+                    </div>
+              
+                    <!-- Jurusan 6 -->
+                    <div class="jurusan-card" onclick="openModal('modalJurusan6')" style="background-image: url('images/tkp1.jpg');">
+                        <div class="overlay"></div>
+                        <h3>TEKNIK KONSTRUKSI DAN PERUMAHAN</h3>
+                        <p>Mempelajari teknik perumahan mencakup, perhitungan RAB dan perencanaan pembangunan</p>
+                        <p>Klik untuk mengetahui lebih dalam </p>
+                    </div>
+              
+                    <!-- Jurusan 7 -->
+                    <div class="jurusan-card" onclick="openModal('modalJurusan7')" style="background-image: url('images/dkv1.png');">
+                        <div class="overlay"></div>
+                        <h3>DESAIN KOMUNIKASI VISUAL</h3>
+                        <p>Mempelajari desain  grafis, fotografi dan vidiografi</p>
+                        <p>Klik untuk mengetahui lebih dalam </p>
+                    </div>
+                </div>
+              </div>
+              
+              <style>
+              .jurusan-wrapper {
+                  max-width: 1200px;
+                  margin: 0 auto;
+                  padding: 20px;
+              }
+              
+              .jurusan-container {
+                  display: grid;
+                  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                  gap: 20px;
+              }
+              
+              .jurusan-card {
+                  position: relative;
+                  color: white;
+                  height: 200px;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: flex-end;
+                  padding: 20px;
+                  border-radius: 8px;
+                  background-size: cover;
+                  background-position: center;
+                  overflow: hidden;
+                  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                  transition: transform 0.3s;
+              }
+              
+              .jurusan-card:hover {
+                  transform: scale(1.03);
+              }
+              
+              .jurusan-card h3,
+              .jurusan-card p {
+                  margin: 0;
+                  z-index: 2;
+              }
+              
+              .jurusan-card .overlay {
+                  position: absolute;
+                  top: 0; left: 0; bottom: 0; right: 0;
+                  background: rgba(0, 0, 0, 0.5);
+                  z-index: 1;
+                  border-radius: 8px;
+              }
+              </style>
+            
+        </section>
+        <!-- Tombol Daftar -->
+        <section class="cta-section">
+            <button class="btn btn-primary" onclick="showTerms()">
+                Daftar Sekarang
+            </button>
+        </section>
+        
+    </div>
+    <!-- Modal Profil Sekolah -->
+    <div id="modalProfil" class="modal">
+        <div class="profile-modal-content">
+            <span class="close" onclick="closeModal('modalProfil')">&times;</span>
+            <div class="profile-content">
+                <div>
+                    <h2>Profil Lengkap SMKN 1 AIMERE</h2>
+                    <p><strong>Sejarah:</strong><br>
+                    Berdiri sejak 2008, telah menghasilkan lebih dari 5000 lulusan yang tersebar di berbagai industri...</p>
+                    
+                    <p><strong>Visi:</strong><br>
+                    "Menjadi sekolah kejuruan terdepan dalam menghasilkan lulusan berkompetensi tinggi di bidang teknologi"</p>
+                    
+                    <p><strong>Fasilitas:</strong></p>
+                    <ul>
+                        <li>7 RUANGAN PRAKTIK SISWA</li>
+                        <li>LAB KOMPUTER</li>
+                        <li>LAB FISIKA, KIMIA, BIOLOGI</li>
+                        <li>PERPUSTAKAAN</li>
+                        <li>LAPANGAN OLAHRAGA</li>
+                    </ul>
+                </div>
+                <div>
+                    <img src="gedung-sekolah.jpg" alt="Gedung Sekolah" style="width:100%; border-radius:10px;">
+                    <div class="school-gallery">
+                        <img src="lab-komputer.jpg" alt="Lab Komputer">
+                        <img src="workshop.jpg" alt="Workshop">
+                        <img src="perpustakaan.jpg" alt="Perpustakaan">
+                        <img src="lapangan.jpg" alt="Lapangan">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Pop-up Jurusan 1 -->
+    <div id="modalJurusan1" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modalJurusan1')">&times;</span>
+            <div class="jurusan-detail">
+                <img src="rpl.jpg" alt="RPL" class="jurusan-image">
+                <div>
+                    <h2>AGRIBISIS TANAMAN PANGAN DAN HOLTIKULTURA</h2>
+                    <p><strong>Kompetensi Keahlian:</strong></p>
+                    <ul>
+                        <li>Menerapkan dasar-dasar agribisnis tanaman</li>
+                        <li>Melaksanakan pekerjaan dasar budidaya tanaman</li>
+                        <li>Melakukan budidaya tanaman pangan</li>
+                        <li>Melakukan budidaya tanaman hortikultura (sayuran, buah, tanaman hias)</li>
+                        <li>Mengelola usaha tani tanaman pangan dan hortikultura</li>
+                        <li>Mengidentifikasi hama dan penyakit tanaman serta cara pengendaliannya</li>
+                        <li>Mengoperasikan alat dan mesin pertanian (alsintan)</li>
+                        <li>Melakukan pemupukan, pengairan, dan pemeliharaan tanaman</li>
+                        <li>Melakukan panen dan pasca panen tanaman pangan dan hortikultura</li>
+                        <li>Menerapkan K3LH (Keselamatan dan Kesehatan Kerja serta Lingkungan Hidup)</li>
+                        <li>Mengolah dan mengemas hasil pertanian</li>
+                        <li>Melaksanakan pemasaran hasil pertanian</li>
+                        <li>Mengembangkan kewirausahaan bidang agribisnis tanaman</li>
+                        <li>Melakukan observasi dan analisis usaha tani</li>
+                    </ul>
+                    <p><strong>Fasilitas:</strong></p>
+                    <ul>
+                        <li>Ruang Praktik siswa</li>
+                        <li>Kegiatan Praktik di Dunia Usaha</li>
+                        <li>Peralatan praktik </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Pop-up Jurusan 2 -->
+    <div id="modalJurusan2" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modalJurusan2')">&times;</span>
+            <div class="jurusan-detail">
+                <img src="tkj.jpg" alt="TKJ" class="jurusan-image">
+                <div>
+                    <h2>AGRIBISIS TANAMAN PERKEBUNAN</h2>
+                    <p><strong>Kompetensi Keahlian:</strong></p>
+                    <ul>
+                        <li>Menerapkan dasar-dasar agribisnis tanaman</li>
+                        <li>Melaksanakan pekerjaan dasar budidaya tanaman</li>
+                        <li>Mengidentifikasi jenis tanaman perkebunan (kopi, kakao, kelapa, kelapa sawit, karet, teh, tembakau, dan lain-lain)</li>
+                        <li>Melakukan budidaya tanaman perkebunan</li>
+                        <li>Melakukan pemeliharaan tanaman perkebunan</li>
+                        <li>Melaksanakan panen dan pascapanen hasil perkebunan</li>
+                        <li>Melakukan pengolahan hasil perkebunan secara sederhana</li>
+                        <li>Mengoperasikan dan merawat alat serta mesin pertanian (alsintan)</li>
+                        <li>Menerapkan teknik pengendalian hama dan penyakit tanaman perkebunan</li>
+                        <li>Mengelola usaha agribisnis tanaman perkebunan</li>
+                        <li>Menerapkan keselamatan kerja, kesehatan kerja, dan perlindungan lingkungan (K3LH)</li>
+                        <li>Melakukan pemasaran produk perkebunan</li>
+                        <li>Mengembangkan kewirausahaan berbasis agribisnis perkebunan</li>
+                    </ul>
+                    <p><strong>Fasilitas:</strong></p>
+                    <ul>
+                        <li>Lahan praktek tanaman perkebunan (contoh: kebun kopi, kelapa, kakao, dsb.)</li>
+                        <li>Greenhouse / Rumah Tanaman</li>
+                        <li>Laboratorium agribisnis dan tanah</li>
+                        <li>Gudang pupuk dan alat pertanian</li>
+                        <li>Unit Produksi dan Pengolahan Hasil Perkebunan</li>
+                        <li>Alat dan mesin pertanian (traktor, sprayer, cultivator, dsb.)</li>
+                        <li>Sarana irigasi dan pengairan</li>
+                        <li>Peralatan praktik pemangkasan, okulasi, dan penyambungan tanaman</li>
+                        <li>Ruang kelas berbasis multimedia</li>
+                        <li>Tempat pemasaran hasil produk (display atau mini market sekolah)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Pop-up Jurusan 3 -->
+    <div id="modalJurusan3" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modalJurusan3')">&times;</span>
+            <div class="jurusan-detail">
+                <img src="images/baliho jurusan UNGGAS.jpg" alt="TKJ" class="jurusan-image">
+                <div>
+                    <h2>AGRIBISIS TERNAK UNGGAS</h2>
+                    <p><strong>Kompetensi Keahlian:</strong></p>
+                    <ul>
+                        <li>Mengenal jenis-jenis unggas potong dan petelur (ayam, itik, puyuh)</li>
+                        <li>Menerapkan prinsip dasar peternakan unggas</li>
+                        <li>Melaksanakan prosedur pemeliharaan induk dan pembibitan unggas</li>
+                        <li>Melaksanakan kegiatan pembesaran ayam pedaging</li>
+                        <li>Melaksanakan pemeliharaan ayam petelur dan unggas penghasil telur lainnya</li>
+                        <li>Melaksanakan manajemen kandang, pemberian pakan, dan air minum</li>
+                        <li>Melakukan pengendalian hama dan penyakit ternak unggas</li>
+                        <li>Melaksanakan kegiatan vaksinasi dan pengobatan unggas</li>
+                        <li>Melaksanakan panen, sortasi, dan penanganan pascapanen hasil unggas (daging, telur)</li>
+                        <li>Melakukan pengolahan sederhana produk ternak unggas (telur asin, abon ayam, nugget)</li>
+                        <li>Mengelola unit usaha agribisnis ternak unggas secara produktif</li>
+                        <li>Menerapkan keselamatan dan kesehatan kerja serta lingkungan hidup (K3LH)</li>
+                        <li>Melaksanakan pemasaran hasil peternakan unggas</li>
+                        <li>Mengembangkan jiwa kewirausahaan di bidang peternakan unggas</li>
+                      </ul>
+                    <p><strong>Fasilitas:</strong></p>
+                    <ul>
+                        <li>Kandang close house dan open house untuk ayam pedaging dan petelur</li>
+                        <li>Kandang pembibitan dan penetasan telur (hatchery)</li>
+                        <li>Unit pembesaran dan pemeliharaan puyuh dan itik</li>
+                        <li>Gudang pakan ternak dan alat pengolahan pakan</li>
+                        <li>Peralatan vaksinasi dan penanganan kesehatan ternak</li>
+                        <li>Laboratorium ternak unggas dan ruang praktik pengolahan hasil</li>
+                        <li>Peralatan pemotongan dan pengolahan hasil unggas</li>
+                        <li>Unit usaha produksi telur asin, nugget, dan olahan daging ayam</li>
+                        <li>Ruang kelas multimedia dengan fasilitas presentasi</li>
+                        <li>Tempat display dan pemasaran hasil peternakan unggas (mini market sekolah)</li>
+                      </ul>
+                </div>
+            </div>
+        </div>
+    </div><!-- Modal Pop-up Jurusan 4 -->
+    <div id="modalJurusan4" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modalJurusan4')">&times;</span>
+            <div class="jurusan-detail">
+                <img src="tkj.jpg" alt="TKJ" class="jurusan-image">
+                <div>
+                    <h2>AGRIBISIS TERNAK RUMINANSIA</h2>
+                    <p><strong>Kompetensi Keahlian:</strong></p>
+                    <ul>
+                        <li>Mengenal jenis ternak ruminansia (sapi, kambing, domba, kerbau)</li>
+                        <li>Melaksanakan manajemen kandang dan pemeliharaan ruminansia</li>
+                        <li>Memberikan pakan, vitamin, dan mineral sesuai kebutuhan ternak</li>
+                        <li>Melaksanakan pengendalian penyakit dan vaksinasi ternak</li>
+                        <li>Melaksanakan proses pembibitan dan reproduksi ternak</li>
+                        <li>Melakukan penanganan pasca panen (daging, susu, pupuk kandang)</li>
+                        <li>Mengoperasikan alat-alat peternakan ruminansia</li>
+                        <li>Menerapkan K3LH dalam kegiatan peternakan</li>
+                        <li>Mengelola dan memasarkan hasil usaha ternak ruminansia</li>
+                      </ul>
+                    <p><strong>Fasilitas:</strong></p>
+                    <ul>
+                        <li>Kandang ruminansia (sapi, kambing, domba)</li>
+                        <li>Unit pembibitan dan pemeliharaan</li>
+                        <li>Laboratorium reproduksi ternak</li>
+                        <li>Peralatan pengolahan pakan dan penggilingan</li>
+                        <li>Peralatan pemerahan susu dan pengolahan pupuk organik</li>
+                      </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Pop-up Jurusan 5 -->
+    <div id="modalJurusan5" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('mmodalJurusan5')">&times;</span>
+            <div class="jurusan-detail">
+                <img src="tkj.jpg" alt="TKJ" class="jurusan-image">
+                <div>
+                    <h2>TEKNIK KENDARAAN RINGAN OTOMOTIF</h2>
+                    <p><strong>Kompetensi Keahlian:</strong></p>
+                    <ul>
+                        <li>Melakukan perawatan dan perbaikan mesin kendaraan ringan</li>
+                        <li>Melakukan perawatan sistem pemindah tenaga</li>
+                        <li>Memahami sistem rem, suspensi, dan kemudi</li>
+                        <li>Melakukan servis sistem kelistrikan kendaraan</li>
+                        <li>Melakukan diagnosa dan tune-up kendaraan</li>
+                        <li>Menggunakan alat ukur dan alat kerja bengkel</li>
+                        <li>Menerapkan prosedur keselamatan kerja otomotif</li>
+                        <li>Mengelola usaha perbengkelan</li>
+                      </ul>
+                    <p><strong>Fasilitas:</strong></p>
+                    <ul>
+                        <li>Bengkel otomotif lengkap</li>
+                        <li>Lift mobil dan scanner ECU</li>
+                        <li>Mesin simulator dan engine stand</li>
+                        <li>Alat ukur mekanik dan digital</li>
+                        <li>Laboratorium kelistrikan otomotif</li>
+                      </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Pop-up Jurusan 6 -->
+    <div id="modalJurusan6" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modalJurusan6')">&times;</span>
+            <div class="jurusan-detail">
+                <img src="tkj.jpg" alt="TKJ" class="jurusan-image">
+                <div>
+                    <h2>TEKNIK PERUMAHAN DAN PROPERTI</h2>
+                    <p><strong>Kompetensi Keahlian:</strong></p>
+                    <ul>
+                        <li>Memahami prinsip perumahan dan properti</li>
+                        <li>Menggambar rencana dan desain bangunan sederhana</li>
+                        <li>Menghitung anggaran biaya bangunan</li>
+                        <li>Melaksanakan konstruksi bangunan (pondasi, struktur, atap, dsb.)</li>
+                        <li>Melaksanakan pekerjaan finishing (cat, keramik, plafon)</li>
+                        <li>Menerapkan teknik perawatan dan renovasi rumah</li>
+                        <li>Menerapkan prosedur K3 pada pekerjaan konstruksi</li>
+                        <li>Mengelola proyek properti kecil-menengah</li>
+                      </ul>
+                    <p><strong>Fasilitas:</strong></p>
+                    <ul>
+                        <li>Laboratorium perancangan bangunan</li>
+                        <li>Peralatan praktik konstruksi ringan</li>
+                        <li>Miniatur rumah percontohan</li>
+                        <li>Perangkat lunak desain bangunan (AutoCAD, SketchUp)</li>
+                        <li>Ruang praktik perawatan dan renovasi bangunan</li>
+                      </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Pop-up Jurusan 7 -->
+    <div id="modalJurusan7" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modalJurusan7')">&times;</span>
+            <div class="jurusan-detail">
+                <img src="tkj.jpg" alt="TKJ" class="jurusan-image">
+                <div>
+                    <h2>DESAIN KOMUNIKASI VISUAL</h2>
+                    <p><strong>Kompetensi Keahlian:</strong></p>
+                    <ul>
+                        <li>Mengenal prinsip dasar desain grafis</li>
+                        <li>Menggambar sketsa dan ilustrasi manual/digital</li>
+                        <li>Menggunakan perangkat lunak desain (CorelDRAW, Photoshop, Illustrator)</li>
+                        <li>Merancang logo, poster, brosur, dan media cetak lainnya</li>
+                        <li>Mengolah desain multimedia dan animasi sederhana</li>
+                        <li>Menyiapkan file untuk kebutuhan percetakan dan produksi</li>
+                        <li>Mengelola proyek desain dan komunikasi visual</li>
+                        <li>Menerapkan estetika visual dan tren desain</li>
+                      </ul>
+                    <p><strong>Fasilitas:</strong></p>
+                    <ul>
+                        <li>Laboratorium komputer grafis</li>
+                        <li>Perangkat lunak desain profesional (Adobe Suite, Corel, dsb.)</li>
+                        <li>Tablet gambar (drawing tablet)</li>
+                        <li>Printer dan mesin cutting sticker</li>
+                        <li>Studio mini fotografi dan multimedia</li>
+                      </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tambahkan modal untuk jurusan lainnya -->
+     <!-- Modal Syarat dan Ketentuan -->
+    <div id="termsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('termsModal')">&times;</span>
+            <h2>Syarat dan Ketentuan</h2>
+            <div class="terms-content">
+                <ol>
+                    <li>TELAH MENGIKUTI UJIAN AKHIR SEKOLAH MENENGAH PERTAMA</li>
+                    <li>Melampirkan dokumen lengkap</li>
+                    <li>Membayar biaya pendaftaran</li>
+                </ol>
+            </div>
+            <div class="button-group">
+                <button class="btn-secondary" onclick="closeModal('termsModal')">Tutup</button>
+                <button class="btn-primary" onclick="showForm()">Setuju & Lanjutkan</button>
+            </div>
+        </div>
+    </div> <!-- Form Pendaftaran -->
+    <div id="formModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAllModals()">&times;</span>
+            <h2>Formulir Pendaftaran</h2>
+            <form action="https://script.google.com/macros/s/AKfycbzcJxdN5RKZegZt32wzT4U-Y5Rs68dn9RebXI2CLAIhuSsDxF3TWU2PyPAwfnifdIpL1A/exec" method="post">
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 10px;">
+                        Nama Lengkap:<br />
+                        <input name="nama" required style="width: 100%; padding: 8px; border-radius: 10px; border: 1px solid #ccc;">
+                    </label>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 10px;">
+                        Jenis Kelamin:<br />
+                        <select name="jenis_kelamin" required style="width: 100%; padding: 8px; border-radius: 10px; border: 1px solid #ccc;">
+                            <option value="">-- Pilih --</option>
+                            <option>Laki-laki</option>
+                            <option>Perempuan</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 10px;">
+                        Tanggal Lahir:<br />
+                        <input type="date" name="tanggal_lahir" required style="width: 100%; padding: 8px; border-radius: 10px; border: 1px solid #ccc;">
+                    </label>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 10px;">
+                        Alamat:<br />
+                        <input name="alamat" required style="width: 100%; padding: 8px; border-radius: 10px; border: 1px solid #ccc;">
+                    </label>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 10px;">
+                        No HP:<br />
+                        <input type="tel" name="no_hp" required style="width: 100%; padding: 8px; border-radius: 10px; border: 1px solid #ccc;">
+                    </label>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 10px;">
+                        Minat dan Bakat:<br />
+                        <input name="minat_dan_bakat" style="width: 100%; padding: 8px; border-radius: 10px; border: 1px solid #ccc;">
+                    </label>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 10px;">
+                        Asal Sekolah:<br />
+                        <input name="asal_sekolah" required style="width: 100%; padding: 8px; border-radius: 10px; border: 1px solid #ccc;">
+                    </label>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 10px;">
+                        Nama Orang Tua:<br />
+                        <input name="nama_ortu" required style="width: 100%; padding: 8px; border-radius: 10px; border: 1px solid #ccc;">
+                    </label>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 10px;">
+                        HP Orang Tua:<br />
+                        <input type="tel" name="hp_ortu" required style="width: 100%; padding: 8px; border-radius: 10px; border: 1px solid #ccc;">
+                    </label>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 10px;">
+                        Jurusan:<br />
+                        <select name="jurusan" style="width: 100%; padding: 8px; border-radius: 10px; border: 1px solid #ccc;">
+                            <option value="">-- Pilih --</option>
+                            <option>AGRIBISIS TANAMAN PANGAN DAN HOLTIKULTURA</option>
+                            <option>AGRIBISIS TANAMAN PERKEBUNAN</option>
+                            <option>AAGRIBISNIS TERNAK UNGGAS</option>
+                            <option>AGRIBISNIS TERNAK RUMIN</option>
+                            <option>TEKNIK KENDARAAN RINGAN</option>
+                            <option>TEKNIK KONSTRUKSI DAN PERUMAHAN</option>
+                            <option>DESAIN KOMUNIKASI VISUAL</option>
+                        </select>
+                    </label>
+                </div>
+
+                <button type="submit" style="margin-top: 1rem; background-color: #2563eb; color: white; padding: 12px 24px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; width: 100%;">
+                    DAFTAR
+                </button>
+            </form>
+
+
+    <script>
+        // Fungsi untuk membuka modal
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+        function showTerms() {
+            document.getElementById('termsModal').style.display = 'block';
+        }
+
+        function showForm() {
+            closeModal('termsModal');
+            document.getElementById('formModal').style.display = 'block';
+        }
+
+        // Fungsi untuk menutup modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Tutup modal ketika klik di luar area konten
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+
+   
+</body>
+</html>
